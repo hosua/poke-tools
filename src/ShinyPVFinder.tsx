@@ -10,48 +10,55 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 import { useState } from "react";
 
-const NatureEnum = {
-  0: "Hardy",
-  1: "Lonely",
-  2: "Brave",
-  3: "Adamant",
-  4: "Naughty",
-  5: "Bold",
-  6: "Docile",
-  7: "Relaxed",
-  8: "Impish",
-  9: "Lax",
-  10: "Timid",
-  11: "Hasty",
-  12: "Serious",
-  13: "Jolly",
-  14: "Naive",
-  15: "Modest",
-  16: "Mild",
-  17: "Quiet",
-  18: "Bashful",
-  19: "Rash",
-  20: "Calm",
-  21: "Gentle",
-  22: "Sassy",
-  23: "Careful",
-  24: "Quirky",
-};
+const Natures = [
+  "Hardy",
+  "Lonely",
+  "Brave",
+  "Adamant",
+  "Naughty",
+  "Bold",
+  "Docile",
+  "Relaxed",
+  "Impish",
+  "Lax",
+  "Timid",
+  "Hasty",
+  "Serious",
+  "Jolly",
+  "Naive",
+  "Modest",
+  "Mild",
+  "Quiet",
+  "Bashful",
+  "Rash",
+  "Calm",
+  "Gentle",
+  "Sassy",
+  "Careful",
+  "Quirky",
+] as const;
 
-const findShinyPVs = async (trainerId, trainerSecretId) => {
-  trainerId = parseInt(trainerId, 16);
-  trainerSecretId = parseInt(trainerSecretId, 16);
+type Nature = (typeof Natures)[number];
 
-  const results = {};
+const findShinyPVs = async (trainerId: string, trainerSecretId: string) => {
+  const trainerIdVal = parseInt(trainerId, 16);
+  const trainerSecretIdVal = parseInt(trainerSecretId, 16);
+
+  const results: Record<Nature, number[]> = Natures.reduce(
+    (acc, nature) => {
+      acc[nature] = [];
+      return acc;
+    },
+    {} as Record<Nature, number[]>,
+  );
 
   for (let x = 0; x <= 0xffff; x++) {
     for (let i = 0; i < 8; i++) {
-      const y = trainerId ^ trainerSecretId ^ x ^ i;
+      const y = trainerIdVal ^ trainerSecretIdVal ^ x ^ i;
       if (y < 0 || y > 0xffff) continue;
 
       const pv = ((x << 16) | y) >>> 0; // >>> 0 will essentially make js treat this as an unsigned int
-      const nature = NatureEnum[pv % 25];
-      if (!(nature in results)) results[nature] = [];
+      const nature = Natures[pv % 25];
       if (results[nature].length < 10) results[nature].push(pv); // limit to only the first 10 pvs we find
     }
   }
@@ -60,15 +67,18 @@ const findShinyPVs = async (trainerId, trainerSecretId) => {
 
 const ShinyPVFinder = () => {
   const [input, setInput] = useState({
-    trainerId: localStorage.getItem("trainer_id"),
-    trainerSecretId: localStorage.getItem("trainer_secret_id"),
+    trainerId: localStorage.getItem("trainer_id") || "",
+    trainerSecretId: localStorage.getItem("trainer_secret_id") || "",
   });
-  const [shinyPVs, setShinyPVs] = useState(null);
+  const [shinyPVs, setShinyPVs] = useState<Partial<
+    Record<Nature, number[]>
+  > | null>(null);
   const [loadingPVs, setLoadingPVs] = useState(false);
 
   return (
     <div>
       <Form.Group className="mx-5 mt-3 w-50">
+        <h3> Shiny PV Finder </h3>
         <Row>
           <Col>
             <Form.Label>Trainer ID (hexadecimal)</Form.Label>
