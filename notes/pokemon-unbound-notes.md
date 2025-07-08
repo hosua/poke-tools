@@ -56,8 +56,6 @@ In official pokemon
 
 Opponent Pokemon Memory Address: 0x02024020
 
-Is this data encrypted? Yes, wild pokemon data IS encrypted.
-
 Randomly Encountered Furfrou:
 
 ```python
