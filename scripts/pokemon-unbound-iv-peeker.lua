@@ -1,8 +1,11 @@
+-- to be used with mgba
+
 local buffer = console:createBuffer("iv-peeker")
 
 KEY_L = 1 << 9
 KEY_R = 1 << 8
 KEY_B = 1 << 1
+KEY_SELECT = 1 << 2
 
 PKMN_DS_SIZE = 100
 
@@ -157,18 +160,23 @@ local frame = 0
 local interval = 15
 local selected = 1
 local prev_key_mask = 0
+local selection_locked = false
 
 function OnFrame()
     frame = frame + 1
 
     local keys = emu:getKeys()
 
-    if (keys & KEY_L ~= 0 and prev_key_mask & KEY_L == 0) then
+    if (selection_locked == false and keys & KEY_L ~= 0 and prev_key_mask & KEY_L == 0) then
         selected = ((selected-2) % 12) + 1
     end
 
-    if (keys & KEY_R ~= 0 and prev_key_mask & KEY_R == 0) then
+    if (selection_locked == false and keys & KEY_R ~= 0 and prev_key_mask & KEY_R == 0) then
         selected = (selected % 12) + 1
+    end
+
+    if (keys & KEY_SELECT ~= 0 and prev_key_mask & KEY_SELECT == 0) then
+        selection_locked = not selection_locked
     end
 
     prev_key_mask = keys
@@ -184,13 +192,14 @@ function OnFrame()
         local pv_lo = emu:read16(selected_pv_addr)
         local pv_hi = emu:read16(selected_pv_addr + 2)
 
-        -- This threshold is may not be 16 when, need to test further:
+        -- This threshold may not be 16 when, need to test further:
         -- 1. shiny chaining
         -- 2. breeding with non-OT pokemon (masuda method, e.g. breeding with perfect ditto)
         -- 3. the user posseses the shiny charm
 
         local is_shiny = (tid ~ sid ~ pv_lo ~ pv_hi) < 16
         local shiny_str = (is_shiny and "***SHINY***" or "")
+        local selection_locked_str  = (selection_locked and "LOCKED" or "UNLOCKED")
 
         local pv = emu:read32(selected_pv_addr)
         local nature = natureMap[pv % 25]
@@ -233,7 +242,9 @@ function OnFrame()
         buffer:print(string.format("Sp. Attack: %i\n", spatk))
         buffer:print(string.format("Sp. Defense: %i\n", spdef))
         buffer:print(string.format("\nPress L/R to view previous/next pokemon\n"))
-        -- buffer:print(string.format("Keys 0x%08X\n", keys))
+        buffer:print(string.format("Press Select to lock pokemon selection.\n"))
+        buffer:print(string.format("\nPokemon selection is currently: %s\n", selection_locked_str))
+        -- buffer:print(string.format("\nKeys 0x%08X\n", keys))
     end
 end
 
