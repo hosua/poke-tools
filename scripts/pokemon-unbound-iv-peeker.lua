@@ -1,7 +1,61 @@
 local pv_addr = 0x0202402C
 local iv_addr = 0x02024074
 local name_addr = 0x02024034
+
 local buffer = console:createBuffer("iv-peeker")
+
+KEY_R = 1 << 8
+KEY_B = 1 << 1
+
+PARTY_FIRST_PV = 0x02024284
+PARTY_FIRST_IV = 0x020242CC
+PARTY_FIRST_NAME = 0x0202428C
+PKMN_DS_SIZE = 100
+
+OFFSETS = {
+    {
+        description = "OPPONENT",
+        pv_addr = 0x0202402C,
+        iv_addr = 0x02024074,
+        name_addr = 0x02024034,
+    },
+    {
+        description = "PARTY #1",
+        pv_addr = PARTY_FIRST_PV,
+        iv_addr = PARTY_FIRST_IV,
+        name_addr = PARTY_FIRST_NAME,
+    },
+    {
+        description = "PARTY #2",
+        pv_addr = PARTY_FIRST_PV + PKMN_DS_SIZE * 1,
+        iv_addr = PARTY_FIRST_IV + PKMN_DS_SIZE * 1,
+        name_addr = PARTY_FIRST_NAME + PKMN_DS_SIZE * 1,
+    },
+    {
+        description = "PARTY #3",
+        pv_addr = PARTY_FIRST_PV + PKMN_DS_SIZE * 2,
+        iv_addr = PARTY_FIRST_IV + PKMN_DS_SIZE * 2,
+        name_addr = PARTY_FIRST_NAME + PKMN_DS_SIZE * 2,
+    },
+    {
+        description = "PARTY #4",
+        pv_addr = PARTY_FIRST_PV + PKMN_DS_SIZE * 3,
+        iv_addr = PARTY_FIRST_IV + PKMN_DS_SIZE * 3,
+        name_addr = PARTY_FIRST_NAME + PKMN_DS_SIZE * 3,
+    },
+    {
+        description = "PARTY #5",
+        pv_addr = PARTY_FIRST_PV + PKMN_DS_SIZE * 4,
+        iv_addr = PARTY_FIRST_IV + PKMN_DS_SIZE * 4,
+        name_addr = PARTY_FIRST_NAME + PKMN_DS_SIZE * 4,
+    },
+    {
+        description = "PARTY #6",
+        pv_addr = PARTY_FIRST_PV + PKMN_DS_SIZE * 5,
+        iv_addr = PARTY_FIRST_IV + PKMN_DS_SIZE * 5,
+        name_addr = PARTY_FIRST_NAME + PKMN_DS_SIZE * 5,
+    },
+}
 
 local natureMap = {
   [0] = "Hardy",
@@ -53,46 +107,70 @@ function ConvertNameToAscii(byteArr)
     return table.concat(result)
 end
 
+local frame = 0
+local interval = 15
+local selected = 1
+local prev_key_mask = 0
+
 function OnFrame()
-    local pv = emu:read32(pv_addr)
-    local nature = natureMap[pv % 25]
-    local iv_data = emu:read32(iv_addr)
-    local hp = iv_data & 0x1F
-    local atk = (iv_data >> 5) & 0x1F
-    local def = (iv_data >> 10) & 0x1F
-    local speed = (iv_data >> 15) & 0x1F
-    local spatk = (iv_data >> 20) & 0x1F
-    local spdef = (iv_data >> 25) & 0x1F
+    frame = frame + 1
 
-    local n1 = emu:read32(name_addr);
-    local n2 = emu:read32(name_addr + 4);
-    local n3 = emu:read16(name_addr + 8);
-    local nameBytes = {
-        n1 & 0xFF,
-        (n1 >> 8) & 0xFF,
-        (n1 >> 16) & 0xFF,
-        (n1 >> 24) & 0xFF,
-        n2 & 0xFF,
-        (n2 >> 8) & 0xFF,
-        (n2 >> 16) & 0xFF,
-        (n2 >> 24) & 0xFF,
-        n3 & 0xFF,
-        (n3 >> 8) & 0xFF,
-    }
-    local name = ConvertNameToAscii(nameBytes);
+    local keys = emu:getKeys()
+    if (keys & KEY_B ~= 0 and prev_key_mask & KEY_B == 0) then
+        selected = (selected % 7) + 1
+    end
 
-    buffer:clear()
-    buffer:moveCursor(0, 0)
-    buffer:print("----------------------------------------\n")
-    buffer:print(string.format("%s\n", name));
-    buffer:print(string.format("Personality Value (PV): 0x%8X\n", pv))
-    buffer:print(string.format("Nature: %s\n\n", nature));
-    buffer:print(string.format("HP: %i\n", hp))
-    buffer:print(string.format("Attack: %i\n", atk))
-    buffer:print(string.format("Defense: %i\n", def))
-    buffer:print(string.format("Speed: %i\n", speed))
-    buffer:print(string.format("Sp. Attack: %i\n", spatk))
-    buffer:print(string.format("Sp. Defense: %i\n", spdef))
+    prev_key_mask = keys
+
+    local selected_pv_addr = OFFSETS[selected].pv_addr
+    local selected_iv_addr = OFFSETS[selected].iv_addr
+    local selected_name_addr = OFFSETS[selected].name_addr
+
+    if (frame % interval == 0) then
+
+        local pv = emu:read32(selected_pv_addr)
+        local nature = natureMap[pv % 25]
+        local iv_data = emu:read32(selected_iv_addr)
+        local hp = iv_data & 0x1F
+        local atk = (iv_data >> 5) & 0x1F
+        local def = (iv_data >> 10) & 0x1F
+        local speed = (iv_data >> 15) & 0x1F
+        local spatk = (iv_data >> 20) & 0x1F
+        local spdef = (iv_data >> 25) & 0x1F
+
+        local n1 = emu:read32(selected_name_addr);
+        local n2 = emu:read32(selected_name_addr + 4);
+        local n3 = emu:read16(selected_name_addr + 8);
+        local nameBytes = {
+            n1 & 0xFF,
+            (n1 >> 8) & 0xFF,
+            (n1 >> 16) & 0xFF,
+            (n1 >> 24) & 0xFF,
+            n2 & 0xFF,
+            (n2 >> 8) & 0xFF,
+            (n2 >> 16) & 0xFF,
+            (n2 >> 24) & 0xFF,
+            n3 & 0xFF,
+            (n3 >> 8) & 0xFF,
+        }
+        local name = ConvertNameToAscii(nameBytes);
+
+        buffer:clear()
+        buffer:moveCursor(0, 0)
+        buffer:print("----------------------------------------\n")
+        buffer:print(string.format("%s\n", OFFSETS[selected].description));
+        buffer:print(string.format("%s\n", name));
+        buffer:print(string.format("Personality Value (PV): 0x%8X\n", pv))
+        buffer:print(string.format("Nature: %s\n\n", nature));
+        buffer:print(string.format("HP: %i\n", hp))
+        buffer:print(string.format("Attack: %i\n", atk))
+        buffer:print(string.format("Defense: %i\n", def))
+        buffer:print(string.format("Speed: %i\n", speed))
+        buffer:print(string.format("Sp. Attack: %i\n", spatk))
+        buffer:print(string.format("Sp. Defense: %i\n", spdef))
+
+        -- buffer:print(string.format("Keys 0x%8X\n", keys))
+    end
 end
 
 callbacks:add("frame", OnFrame)
