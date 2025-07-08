@@ -1,32 +1,28 @@
-local pv_addr = 0x0202402C
-local iv_addr = 0x02024074
-local name_addr = 0x02024034
-
 local buffer = console:createBuffer("iv-peeker")
 
+KEY_L = 1 << 9
 KEY_R = 1 << 8
 KEY_B = 1 << 1
+
+PKMN_DS_SIZE = 100
 
 PARTY_FIRST_PV = 0x02024284
 PARTY_FIRST_OTID = 0x02024288
 PARTY_FIRST_NAME = 0x0202428C
 PARTY_FIRST_IV = 0x020242CC
-PKMN_DS_SIZE = 100
+
+OPPONENT_FIRST_PV = 0x0202402C
+OPPONENT_FIRST_OTID = 0x02024030
+OPPONENT_FIRST_IV = 0x02024074
+OPPONENT_FIRST_NAME = 0x02024034
 
 OFFSETS = {
     {
-        description = "OPPONENT",
-        pv_addr = 0x0202402C,
-        otid_addr = 0x2024030,
-        iv_addr = 0x02024074,
-        name_addr = 0x02024034,
-    },
-    {
         description = "PARTY #1",
-        pv_addr = PARTY_FIRST_PV,
-        otid_addr = PARTY_FIRST_OTID,
-        iv_addr = PARTY_FIRST_IV,
-        name_addr = PARTY_FIRST_NAME,
+        pv_addr = PARTY_FIRST_PV + PKMN_DS_SIZE * 0,
+        otid_addr = PARTY_FIRST_OTID + PKMN_DS_SIZE * 0,
+        iv_addr = PARTY_FIRST_IV + PKMN_DS_SIZE * 0,
+        name_addr = PARTY_FIRST_NAME + PKMN_DS_SIZE * 0,
     },
     {
         description = "PARTY #2",
@@ -62,6 +58,48 @@ OFFSETS = {
         otid_addr = PARTY_FIRST_OTID + PKMN_DS_SIZE * 5,
         iv_addr = PARTY_FIRST_IV + PKMN_DS_SIZE * 5,
         name_addr = PARTY_FIRST_NAME + PKMN_DS_SIZE * 5,
+    },
+    {
+        description = "OPPONENT #1",
+        pv_addr = OPPONENT_FIRST_PV + PKMN_DS_SIZE * 0,
+        otid_addr = OPPONENT_FIRST_OTID + PKMN_DS_SIZE * 0,
+        iv_addr = OPPONENT_FIRST_IV + PKMN_DS_SIZE * 0,
+        name_addr = OPPONENT_FIRST_NAME + PKMN_DS_SIZE * 0,
+    },
+    {
+        description = "OPPONENT #2",
+        pv_addr = OPPONENT_FIRST_PV + PKMN_DS_SIZE * 1,
+        otid_addr = OPPONENT_FIRST_OTID + PKMN_DS_SIZE * 1,
+        iv_addr = OPPONENT_FIRST_IV + PKMN_DS_SIZE * 1,
+        name_addr = OPPONENT_FIRST_NAME + PKMN_DS_SIZE * 1,
+    },
+    {
+        description = "OPPONENT #3",
+        pv_addr = OPPONENT_FIRST_PV + PKMN_DS_SIZE * 2,
+        otid_addr = OPPONENT_FIRST_OTID + PKMN_DS_SIZE * 2,
+        iv_addr = OPPONENT_FIRST_IV + PKMN_DS_SIZE * 2,
+        name_addr = OPPONENT_FIRST_NAME + PKMN_DS_SIZE * 2,
+    },
+    {
+        description = "OPPONENT #4",
+        pv_addr = OPPONENT_FIRST_PV + PKMN_DS_SIZE * 3,
+        otid_addr = OPPONENT_FIRST_OTID + PKMN_DS_SIZE * 3,
+        iv_addr = OPPONENT_FIRST_IV + PKMN_DS_SIZE * 3,
+        name_addr = OPPONENT_FIRST_NAME + PKMN_DS_SIZE * 3,
+    },
+    {
+        description = "OPPONENT #5",
+        pv_addr = OPPONENT_FIRST_PV + PKMN_DS_SIZE * 4,
+        otid_addr = OPPONENT_FIRST_OTID + PKMN_DS_SIZE * 4,
+        iv_addr = OPPONENT_FIRST_IV + PKMN_DS_SIZE * 4,
+        name_addr = OPPONENT_FIRST_NAME + PKMN_DS_SIZE * 4,
+    },
+    {
+        description = "OPPONENT #6",
+        pv_addr = OPPONENT_FIRST_PV + PKMN_DS_SIZE * 5,
+        otid_addr = OPPONENT_FIRST_OTID + PKMN_DS_SIZE * 5,
+        iv_addr = OPPONENT_FIRST_IV + PKMN_DS_SIZE * 5,
+        name_addr = OPPONENT_FIRST_NAME + PKMN_DS_SIZE * 5,
     },
 }
 
@@ -124,8 +162,13 @@ function OnFrame()
     frame = frame + 1
 
     local keys = emu:getKeys()
-    if (keys & KEY_B ~= 0 and prev_key_mask & KEY_B == 0) then
-        selected = (selected % 7) + 1
+
+    if (keys & KEY_L ~= 0 and prev_key_mask & KEY_L == 0) then
+        selected = ((selected-2) % 12) + 1
+    end
+
+    if (keys & KEY_R ~= 0 and prev_key_mask & KEY_R == 0) then
+        selected = (selected % 12) + 1
     end
 
     prev_key_mask = keys
@@ -140,12 +183,12 @@ function OnFrame()
         local sid = emu:read16(selected_otid_addr + 2)
         local pv_lo = emu:read16(selected_pv_addr)
         local pv_hi = emu:read16(selected_pv_addr + 2)
-        
-        -- this threshold is may not be 16 when:
+
+        -- This threshold is may not be 16 when, need to test further:
         -- 1. shiny chaining
         -- 2. breeding with non-OT pokemon (masuda method, e.g. breeding with perfect ditto)
         -- 3. the user posseses the shiny charm
-        -- Further testing needs to be done here.
+
         local is_shiny = (tid ~ sid ~ pv_lo ~ pv_hi) < 16
         local shiny_str = (is_shiny and "***SHINY***" or "")
 
@@ -189,8 +232,8 @@ function OnFrame()
         buffer:print(string.format("Speed: %i\n", speed))
         buffer:print(string.format("Sp. Attack: %i\n", spatk))
         buffer:print(string.format("Sp. Defense: %i\n", spdef))
-
-        -- buffer:print(string.format("Keys 0x%8X\n", keys))
+        buffer:print(string.format("\nPress L/R to view previous/next pokemon\n"))
+        -- buffer:print(string.format("Keys 0x%08X\n", keys))
     end
 end
 
