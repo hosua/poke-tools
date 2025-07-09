@@ -12,14 +12,14 @@ KEY_SELECT = 1 << 2
 PKMN_DS_SIZE = 100
 
 PARTY_ADDR = 0x02024284
-
 OPPONENT_PARTY_ADDR = 0x0202402C
 
 OFFSET_PV = 0
 OFFSET_OTID = 4
 OFFSET_NAME = 8
+OFFSET_ITEM = 34
+OFFSET_EV = 56
 OFFSET_IV = 72
-EV_OFFSET = 56
 
 OFFSETS = {
     {
@@ -27,96 +27,108 @@ OFFSETS = {
         pv_addr = PARTY_ADDR + OFFSET_PV + PKMN_DS_SIZE * 0,
         otid_addr = PARTY_ADDR + OFFSET_OTID + PKMN_DS_SIZE * 0,
         iv_addr = PARTY_ADDR + OFFSET_IV + PKMN_DS_SIZE * 0,
-        ev_addr = PARTY_ADDR + EV_OFFSET + PKMN_DS_SIZE * 0,
+        ev_addr = PARTY_ADDR + OFFSET_EV + PKMN_DS_SIZE * 0,
         name_addr = PARTY_ADDR + OFFSET_NAME + PKMN_DS_SIZE * 0,
+        item_addr = PARTY_ADDR + OFFSET_ITEM + PKMN_DS_SIZE * 0,
     },
     {
         description = "PARTY #2",
         pv_addr = PARTY_ADDR + OFFSET_PV + PKMN_DS_SIZE * 1,
         otid_addr = PARTY_ADDR + OFFSET_OTID + PKMN_DS_SIZE * 1,
         iv_addr = PARTY_ADDR + OFFSET_IV + PKMN_DS_SIZE * 1,
-        ev_addr = PARTY_ADDR + EV_OFFSET + PKMN_DS_SIZE * 1,
+        ev_addr = PARTY_ADDR + OFFSET_EV + PKMN_DS_SIZE * 1,
         name_addr = PARTY_ADDR + OFFSET_NAME + PKMN_DS_SIZE * 1,
+        item_addr = PARTY_ADDR + OFFSET_ITEM + PKMN_DS_SIZE * 1,
     },
     {
         description = "PARTY #3",
         pv_addr = PARTY_ADDR + OFFSET_PV + PKMN_DS_SIZE * 2,
         otid_addr = PARTY_ADDR + OFFSET_OTID + PKMN_DS_SIZE * 2,
         iv_addr = PARTY_ADDR + OFFSET_IV + PKMN_DS_SIZE * 2,
-        ev_addr = PARTY_ADDR + EV_OFFSET + PKMN_DS_SIZE * 2,
+        ev_addr = PARTY_ADDR + OFFSET_EV + PKMN_DS_SIZE * 2,
         name_addr = PARTY_ADDR + OFFSET_NAME + PKMN_DS_SIZE * 2,
+        item_addr = PARTY_ADDR + OFFSET_ITEM + PKMN_DS_SIZE * 2,
     },
     {
         description = "PARTY #4",
         pv_addr = PARTY_ADDR + OFFSET_PV + PKMN_DS_SIZE * 3,
         otid_addr = PARTY_ADDR + OFFSET_OTID + PKMN_DS_SIZE * 3,
         iv_addr = PARTY_ADDR + OFFSET_IV + PKMN_DS_SIZE * 3,
-        ev_addr = PARTY_ADDR + EV_OFFSET + PKMN_DS_SIZE * 3,
+        ev_addr = PARTY_ADDR + OFFSET_EV + PKMN_DS_SIZE * 3,
         name_addr = PARTY_ADDR + OFFSET_NAME + PKMN_DS_SIZE * 3,
+        item_addr = PARTY_ADDR + OFFSET_ITEM + PKMN_DS_SIZE * 3,
     },
     {
         description = "PARTY #5",
         pv_addr = PARTY_ADDR + OFFSET_PV + PKMN_DS_SIZE * 4,
         otid_addr = PARTY_ADDR + OFFSET_OTID + PKMN_DS_SIZE * 4,
         iv_addr = PARTY_ADDR + OFFSET_IV + PKMN_DS_SIZE * 4,
-        ev_addr = PARTY_ADDR + EV_OFFSET + PKMN_DS_SIZE * 4,
+        ev_addr = PARTY_ADDR + OFFSET_EV + PKMN_DS_SIZE * 4,
         name_addr = PARTY_ADDR + OFFSET_NAME + PKMN_DS_SIZE * 4,
+        item_addr = PARTY_ADDR + OFFSET_ITEM + PKMN_DS_SIZE * 4,
     },
     {
         description = "PARTY #6",
         pv_addr = PARTY_ADDR + OFFSET_PV + PKMN_DS_SIZE * 5,
         otid_addr = PARTY_ADDR + OFFSET_OTID + PKMN_DS_SIZE * 5,
         iv_addr = PARTY_ADDR + OFFSET_IV + PKMN_DS_SIZE * 5,
-        ev_addr = PARTY_ADDR + EV_OFFSET + PKMN_DS_SIZE * 5,
+        ev_addr = PARTY_ADDR + OFFSET_EV + PKMN_DS_SIZE * 5,
         name_addr = PARTY_ADDR + OFFSET_NAME + PKMN_DS_SIZE * 5,
+        item_addr = PARTY_ADDR + OFFSET_ITEM + PKMN_DS_SIZE * 5,
     },
     {
         description = "OPPONENT #1",
         pv_addr = OPPONENT_PARTY_ADDR + OFFSET_PV + PKMN_DS_SIZE * 0,
         otid_addr = OPPONENT_PARTY_ADDR + OFFSET_OTID + PKMN_DS_SIZE * 0,
         iv_addr = OPPONENT_PARTY_ADDR + OFFSET_IV + PKMN_DS_SIZE * 0,
-        ev_addr = OPPONENT_PARTY_ADDR + EV_OFFSET + PKMN_DS_SIZE * 0,
+        ev_addr = OPPONENT_PARTY_ADDR + OFFSET_EV + PKMN_DS_SIZE * 0,
         name_addr = OPPONENT_PARTY_ADDR + OFFSET_NAME + PKMN_DS_SIZE * 0,
+        item_addr = OPPONENT_PARTY_ADDR + OFFSET_ITEM + PKMN_DS_SIZE * 0,
     },
     {
         description = "OPPONENT #2",
         pv_addr = OPPONENT_PARTY_ADDR + OFFSET_PV + PKMN_DS_SIZE * 1,
         otid_addr = OPPONENT_PARTY_ADDR + OFFSET_OTID + PKMN_DS_SIZE * 1,
         iv_addr = OPPONENT_PARTY_ADDR + OFFSET_IV + PKMN_DS_SIZE * 1,
-        ev_addr = OPPONENT_PARTY_ADDR + EV_OFFSET + PKMN_DS_SIZE * 1,
+        ev_addr = OPPONENT_PARTY_ADDR + OFFSET_EV + PKMN_DS_SIZE * 1,
         name_addr = OPPONENT_PARTY_ADDR + OFFSET_NAME + PKMN_DS_SIZE * 1,
+        item_addr = OPPONENT_PARTY_ADDR + OFFSET_ITEM + PKMN_DS_SIZE * 1,
     },
     {
         description = "OPPONENT #3",
         pv_addr = OPPONENT_PARTY_ADDR + OFFSET_PV + PKMN_DS_SIZE * 2,
         otid_addr = OPPONENT_PARTY_ADDR + OFFSET_OTID + PKMN_DS_SIZE * 2,
         iv_addr = OPPONENT_PARTY_ADDR + OFFSET_IV + PKMN_DS_SIZE * 2,
-        ev_addr = OPPONENT_PARTY_ADDR + EV_OFFSET + PKMN_DS_SIZE * 2,
+        ev_addr = OPPONENT_PARTY_ADDR + OFFSET_EV + PKMN_DS_SIZE * 2,
         name_addr = OPPONENT_PARTY_ADDR + OFFSET_NAME + PKMN_DS_SIZE * 2,
+        item_addr = OPPONENT_PARTY_ADDR + OFFSET_ITEM + PKMN_DS_SIZE * 2,
     },
     {
         description = "OPPONENT #4",
         pv_addr = OPPONENT_PARTY_ADDR + OFFSET_PV + PKMN_DS_SIZE * 3,
         otid_addr = OPPONENT_PARTY_ADDR + OFFSET_OTID + PKMN_DS_SIZE * 3,
         iv_addr = OPPONENT_PARTY_ADDR + OFFSET_IV + PKMN_DS_SIZE * 3,
-        ev_addr = OPPONENT_PARTY_ADDR + EV_OFFSET + PKMN_DS_SIZE * 3,
+        ev_addr = OPPONENT_PARTY_ADDR + OFFSET_EV + PKMN_DS_SIZE * 3,
         name_addr = OPPONENT_PARTY_ADDR + OFFSET_NAME + PKMN_DS_SIZE * 3,
+        item_addr = OPPONENT_PARTY_ADDR + OFFSET_ITEM + PKMN_DS_SIZE * 3,
     },
     {
         description = "OPPONENT #5",
         pv_addr = OPPONENT_PARTY_ADDR + OFFSET_PV + PKMN_DS_SIZE * 4,
         otid_addr = OPPONENT_PARTY_ADDR + OFFSET_OTID + PKMN_DS_SIZE * 4,
         iv_addr = OPPONENT_PARTY_ADDR + OFFSET_IV + PKMN_DS_SIZE * 4,
-        ev_addr = OPPONENT_PARTY_ADDR + EV_OFFSET + PKMN_DS_SIZE * 4,
+        ev_addr = OPPONENT_PARTY_ADDR + OFFSET_EV + PKMN_DS_SIZE * 4,
         name_addr = OPPONENT_PARTY_ADDR + OFFSET_NAME + PKMN_DS_SIZE * 4,
+        item_addr = OPPONENT_PARTY_ADDR + OFFSET_ITEM + PKMN_DS_SIZE * 4,
     },
     {
         description = "OPPONENT #6",
         pv_addr = OPPONENT_PARTY_ADDR + OFFSET_PV + PKMN_DS_SIZE * 5,
         otid_addr = OPPONENT_PARTY_ADDR + OFFSET_OTID + PKMN_DS_SIZE * 5,
         iv_addr = OPPONENT_PARTY_ADDR + OFFSET_IV + PKMN_DS_SIZE * 5,
-        ev_addr = OPPONENT_PARTY_ADDR + EV_OFFSET + PKMN_DS_SIZE * 5,
+        ev_addr = OPPONENT_PARTY_ADDR + OFFSET_EV + PKMN_DS_SIZE * 5,
         name_addr = OPPONENT_PARTY_ADDR + OFFSET_NAME + PKMN_DS_SIZE * 5,
+        item_addr = OPPONENT_PARTY_ADDR + OFFSET_ITEM + PKMN_DS_SIZE * 5,
     },
 }
 
@@ -163,6 +175,7 @@ function OnFrame()
     local selected_iv_addr = OFFSETS[selected].iv_addr
     local selected_ev_addr = OFFSETS[selected].ev_addr
     local selected_name_addr = OFFSETS[selected].name_addr
+    local selected_item_addr = OFFSETS[selected].item_addr
 
     if (frame % interval == 0) then
         local tid = emu:read16(selected_otid_addr)
@@ -181,6 +194,9 @@ function OnFrame()
 
         local pv = emu:read32(selected_pv_addr)
         local nature = tables.natures[pv % 25]
+
+        local item_data = emu:read16(selected_item_addr)
+        local item = tables.items[item_data]
 
         local iv_data = emu:read32(selected_iv_addr)
         local iv_hp = iv_data & 0x1F
@@ -223,6 +239,7 @@ function OnFrame()
         buffer:print(string.format("%s: %s %s\n", OFFSETS[selected].description, name, shiny_str));
         buffer:print(string.format("Personality Value (PV): 0x%08X\n", pv))
         buffer:print(string.format("Nature: %s\n", nature));
+        buffer:print(string.format("Item: %s\n", item));
         buffer:print(string.format("------ IVs -------\n"));
         buffer:print(string.format("HP: %i\n", iv_hp))
         buffer:print(string.format("Attack: %i\n", iv_atk))
