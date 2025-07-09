@@ -18,6 +18,7 @@ OFFSET_PV = 0
 OFFSET_OTID = 4
 OFFSET_NAME = 8
 OFFSET_ITEM = 34
+OFFSET_MOVES = 44
 OFFSET_EV = 56
 OFFSET_IV = 72
 
@@ -30,6 +31,7 @@ OFFSETS = {
         ev_addr = PARTY_ADDR + OFFSET_EV + PKMN_DS_SIZE * 0,
         name_addr = PARTY_ADDR + OFFSET_NAME + PKMN_DS_SIZE * 0,
         item_addr = PARTY_ADDR + OFFSET_ITEM + PKMN_DS_SIZE * 0,
+        moves_addr = PARTY_ADDR + OFFSET_MOVES + PKMN_DS_SIZE * 0,
     },
     {
         description = "PARTY #2",
@@ -39,6 +41,7 @@ OFFSETS = {
         ev_addr = PARTY_ADDR + OFFSET_EV + PKMN_DS_SIZE * 1,
         name_addr = PARTY_ADDR + OFFSET_NAME + PKMN_DS_SIZE * 1,
         item_addr = PARTY_ADDR + OFFSET_ITEM + PKMN_DS_SIZE * 1,
+        moves_addr = PARTY_ADDR + OFFSET_MOVES + PKMN_DS_SIZE * 1,
     },
     {
         description = "PARTY #3",
@@ -48,6 +51,7 @@ OFFSETS = {
         ev_addr = PARTY_ADDR + OFFSET_EV + PKMN_DS_SIZE * 2,
         name_addr = PARTY_ADDR + OFFSET_NAME + PKMN_DS_SIZE * 2,
         item_addr = PARTY_ADDR + OFFSET_ITEM + PKMN_DS_SIZE * 2,
+        moves_addr = PARTY_ADDR + OFFSET_MOVES + PKMN_DS_SIZE * 2,
     },
     {
         description = "PARTY #4",
@@ -57,6 +61,7 @@ OFFSETS = {
         ev_addr = PARTY_ADDR + OFFSET_EV + PKMN_DS_SIZE * 3,
         name_addr = PARTY_ADDR + OFFSET_NAME + PKMN_DS_SIZE * 3,
         item_addr = PARTY_ADDR + OFFSET_ITEM + PKMN_DS_SIZE * 3,
+        moves_addr = PARTY_ADDR + OFFSET_MOVES + PKMN_DS_SIZE * 3,
     },
     {
         description = "PARTY #5",
@@ -66,6 +71,7 @@ OFFSETS = {
         ev_addr = PARTY_ADDR + OFFSET_EV + PKMN_DS_SIZE * 4,
         name_addr = PARTY_ADDR + OFFSET_NAME + PKMN_DS_SIZE * 4,
         item_addr = PARTY_ADDR + OFFSET_ITEM + PKMN_DS_SIZE * 4,
+        moves_addr = PARTY_ADDR + OFFSET_MOVES + PKMN_DS_SIZE * 4,
     },
     {
         description = "PARTY #6",
@@ -75,6 +81,7 @@ OFFSETS = {
         ev_addr = PARTY_ADDR + OFFSET_EV + PKMN_DS_SIZE * 5,
         name_addr = PARTY_ADDR + OFFSET_NAME + PKMN_DS_SIZE * 5,
         item_addr = PARTY_ADDR + OFFSET_ITEM + PKMN_DS_SIZE * 5,
+        moves_addr = PARTY_ADDR + OFFSET_MOVES + PKMN_DS_SIZE * 5,
     },
     {
         description = "OPPONENT #1",
@@ -84,6 +91,7 @@ OFFSETS = {
         ev_addr = OPPONENT_PARTY_ADDR + OFFSET_EV + PKMN_DS_SIZE * 0,
         name_addr = OPPONENT_PARTY_ADDR + OFFSET_NAME + PKMN_DS_SIZE * 0,
         item_addr = OPPONENT_PARTY_ADDR + OFFSET_ITEM + PKMN_DS_SIZE * 0,
+        moves_addr = OPPONENT_PARTY_ADDR + OFFSET_MOVES + PKMN_DS_SIZE * 0,
     },
     {
         description = "OPPONENT #2",
@@ -93,6 +101,7 @@ OFFSETS = {
         ev_addr = OPPONENT_PARTY_ADDR + OFFSET_EV + PKMN_DS_SIZE * 1,
         name_addr = OPPONENT_PARTY_ADDR + OFFSET_NAME + PKMN_DS_SIZE * 1,
         item_addr = OPPONENT_PARTY_ADDR + OFFSET_ITEM + PKMN_DS_SIZE * 1,
+        moves_addr = OPPONENT_PARTY_ADDR + OFFSET_MOVES + PKMN_DS_SIZE * 1,
     },
     {
         description = "OPPONENT #3",
@@ -102,6 +111,7 @@ OFFSETS = {
         ev_addr = OPPONENT_PARTY_ADDR + OFFSET_EV + PKMN_DS_SIZE * 2,
         name_addr = OPPONENT_PARTY_ADDR + OFFSET_NAME + PKMN_DS_SIZE * 2,
         item_addr = OPPONENT_PARTY_ADDR + OFFSET_ITEM + PKMN_DS_SIZE * 2,
+        moves_addr = OPPONENT_PARTY_ADDR + OFFSET_MOVES + PKMN_DS_SIZE * 2,
     },
     {
         description = "OPPONENT #4",
@@ -111,6 +121,7 @@ OFFSETS = {
         ev_addr = OPPONENT_PARTY_ADDR + OFFSET_EV + PKMN_DS_SIZE * 3,
         name_addr = OPPONENT_PARTY_ADDR + OFFSET_NAME + PKMN_DS_SIZE * 3,
         item_addr = OPPONENT_PARTY_ADDR + OFFSET_ITEM + PKMN_DS_SIZE * 3,
+        moves_addr = OPPONENT_PARTY_ADDR + OFFSET_MOVES + PKMN_DS_SIZE * 3,
     },
     {
         description = "OPPONENT #5",
@@ -120,6 +131,7 @@ OFFSETS = {
         ev_addr = OPPONENT_PARTY_ADDR + OFFSET_EV + PKMN_DS_SIZE * 4,
         name_addr = OPPONENT_PARTY_ADDR + OFFSET_NAME + PKMN_DS_SIZE * 4,
         item_addr = OPPONENT_PARTY_ADDR + OFFSET_ITEM + PKMN_DS_SIZE * 4,
+        moves_addr = OPPONENT_PARTY_ADDR + OFFSET_MOVES + PKMN_DS_SIZE * 4,
     },
     {
         description = "OPPONENT #6",
@@ -129,6 +141,7 @@ OFFSETS = {
         ev_addr = OPPONENT_PARTY_ADDR + OFFSET_EV + PKMN_DS_SIZE * 5,
         name_addr = OPPONENT_PARTY_ADDR + OFFSET_NAME + PKMN_DS_SIZE * 5,
         item_addr = OPPONENT_PARTY_ADDR + OFFSET_ITEM + PKMN_DS_SIZE * 5,
+        moves_addr = OPPONENT_PARTY_ADDR + OFFSET_MOVES + PKMN_DS_SIZE * 5,
     },
 }
 
@@ -176,6 +189,7 @@ function OnFrame()
     local selected_ev_addr = OFFSETS[selected].ev_addr
     local selected_name_addr = OFFSETS[selected].name_addr
     local selected_item_addr = OFFSETS[selected].item_addr
+    local selected_moves_addr = OFFSETS[selected].moves_addr
 
     if (frame % interval == 0) then
         local tid = emu:read16(selected_otid_addr)
@@ -197,6 +211,16 @@ function OnFrame()
 
         local item_data = emu:read16(selected_item_addr)
         local item = tables.items[item_data]
+
+        local move1_val = emu:read16(selected_moves_addr)
+        local move2_val = emu:read16(selected_moves_addr + 2)
+        local move3_val = emu:read16(selected_moves_addr + 4)
+        local move4_val = emu:read16(selected_moves_addr + 6)
+
+        local move1 = tables.moves[move1_val]
+        local move2 = tables.moves[move2_val]
+        local move3 = tables.moves[move3_val]
+        local move4 = tables.moves[move4_val]
 
         local iv_data = emu:read32(selected_iv_addr)
         local iv_hp = iv_data & 0x1F
@@ -243,21 +267,7 @@ function OnFrame()
         buffer:print(string.format("Stat: HP | ATK | DEF | SP.A | SP.D | SPEED\n"))
         buffer:print(string.format("IVs: %3i |%4i |%4i |%5i |%5i |%5i\n", iv_hp, iv_atk, iv_def, iv_spatk, iv_spdef, iv_speed))
         buffer:print(string.format("EVs: %3i |%4i |%4i |%5i |%5i |%5i\n", ev_hp, ev_atk, ev_def, ev_spatk, ev_spdef, ev_speed))
-
-        -- buffer:print(string.format("------ IVs -------\n"));
-        -- buffer:print(string.format("HP: %i\n", iv_hp))
-        -- buffer:print(string.format("Attack: %i\n", iv_atk))
-        -- buffer:print(string.format("Defense: %i\n", iv_def))
-        -- buffer:print(string.format("Speed: %i\n", iv_speed))
-        -- buffer:print(string.format("Sp. Attack: %i\n", iv_spatk))
-        -- buffer:print(string.format("Sp. Defense: %i\n", iv_spdef))
-        -- buffer:print(string.format("------ EVs -------\n"));
-        -- buffer:print(string.format("HP: %i\n", ev_hp))
-        -- buffer:print(string.format("Attack: %i\n", ev_atk))
-        -- buffer:print(string.format("Defense: %i\n", ev_def))
-        -- buffer:print(string.format("Speed: %i\n", ev_speed))
-        -- buffer:print(string.format("Sp. Attack: %i\n", ev_spatk))
-        -- buffer:print(string.format("Sp. Defense: %i\n", ev_spdef))
+        buffer:print(string.format("Moves: %s | %s | %s | %s\n", move1, move2, move3, move4))
         buffer:print(string.format("---- Keybinds -----\n"));
         buffer:print(string.format("L/R = view prev/next pokemon\nSelect = Toggle pokemon selection lock\n"))
         buffer:print(string.format("Selection is currently: %s\n", selection_locked_str))
