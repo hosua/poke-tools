@@ -11,13 +11,18 @@ PKMN_DS_SIZE = 100
 
 PARTY_FIRST_PV = 0x02024284
 PARTY_FIRST_OTID = 0x02024288
-PARTY_FIRST_NAME = 0x0202428C
 PARTY_FIRST_IV = 0x020242CC
+PARTY_FIRST_EV = 0x020242BC
+PARTY_FIRST_NAME = 0x0202428C
 
 OPPONENT_FIRST_PV = 0x0202402C
 OPPONENT_FIRST_OTID = 0x02024030
 OPPONENT_FIRST_IV = 0x02024074
+OPPONENT_FIRST_EV = 0x02024064
 OPPONENT_FIRST_NAME = 0x02024034
+
+-- 0x020242BC: EVs (Speed | Def | Atk | HP)
+-- 0x020242C0: EVs (Sp. Def | Sp. Atk)
 
 OFFSETS = {
     {
@@ -25,6 +30,7 @@ OFFSETS = {
         pv_addr = PARTY_FIRST_PV + PKMN_DS_SIZE * 0,
         otid_addr = PARTY_FIRST_OTID + PKMN_DS_SIZE * 0,
         iv_addr = PARTY_FIRST_IV + PKMN_DS_SIZE * 0,
+        ev_addr = PARTY_FIRST_EV + PKMN_DS_SIZE * 0,
         name_addr = PARTY_FIRST_NAME + PKMN_DS_SIZE * 0,
     },
     {
@@ -32,6 +38,7 @@ OFFSETS = {
         pv_addr = PARTY_FIRST_PV + PKMN_DS_SIZE * 1,
         otid_addr = PARTY_FIRST_OTID + PKMN_DS_SIZE * 1,
         iv_addr = PARTY_FIRST_IV + PKMN_DS_SIZE * 1,
+        ev_addr = PARTY_FIRST_EV + PKMN_DS_SIZE * 1,
         name_addr = PARTY_FIRST_NAME + PKMN_DS_SIZE * 1,
     },
     {
@@ -39,6 +46,7 @@ OFFSETS = {
         pv_addr = PARTY_FIRST_PV + PKMN_DS_SIZE * 2,
         otid_addr = PARTY_FIRST_OTID + PKMN_DS_SIZE * 2,
         iv_addr = PARTY_FIRST_IV + PKMN_DS_SIZE * 2,
+        ev_addr = PARTY_FIRST_EV + PKMN_DS_SIZE * 2,
         name_addr = PARTY_FIRST_NAME + PKMN_DS_SIZE * 2,
     },
     {
@@ -46,6 +54,7 @@ OFFSETS = {
         pv_addr = PARTY_FIRST_PV + PKMN_DS_SIZE * 3,
         otid_addr = PARTY_FIRST_OTID + PKMN_DS_SIZE * 3,
         iv_addr = PARTY_FIRST_IV + PKMN_DS_SIZE * 3,
+        ev_addr = PARTY_FIRST_EV + PKMN_DS_SIZE * 3,
         name_addr = PARTY_FIRST_NAME + PKMN_DS_SIZE * 3,
     },
     {
@@ -53,6 +62,7 @@ OFFSETS = {
         pv_addr = PARTY_FIRST_PV + PKMN_DS_SIZE * 4,
         otid_addr = PARTY_FIRST_OTID + PKMN_DS_SIZE * 4,
         iv_addr = PARTY_FIRST_IV + PKMN_DS_SIZE * 4,
+        ev_addr = PARTY_FIRST_EV + PKMN_DS_SIZE * 4,
         name_addr = PARTY_FIRST_NAME + PKMN_DS_SIZE * 4,
     },
     {
@@ -60,6 +70,7 @@ OFFSETS = {
         pv_addr = PARTY_FIRST_PV + PKMN_DS_SIZE * 5,
         otid_addr = PARTY_FIRST_OTID + PKMN_DS_SIZE * 5,
         iv_addr = PARTY_FIRST_IV + PKMN_DS_SIZE * 5,
+        ev_addr = PARTY_FIRST_EV + PKMN_DS_SIZE * 5,
         name_addr = PARTY_FIRST_NAME + PKMN_DS_SIZE * 5,
     },
     {
@@ -67,6 +78,7 @@ OFFSETS = {
         pv_addr = OPPONENT_FIRST_PV + PKMN_DS_SIZE * 0,
         otid_addr = OPPONENT_FIRST_OTID + PKMN_DS_SIZE * 0,
         iv_addr = OPPONENT_FIRST_IV + PKMN_DS_SIZE * 0,
+        ev_addr = OPPONENT_FIRST_EV + PKMN_DS_SIZE * 0,
         name_addr = OPPONENT_FIRST_NAME + PKMN_DS_SIZE * 0,
     },
     {
@@ -74,6 +86,7 @@ OFFSETS = {
         pv_addr = OPPONENT_FIRST_PV + PKMN_DS_SIZE * 1,
         otid_addr = OPPONENT_FIRST_OTID + PKMN_DS_SIZE * 1,
         iv_addr = OPPONENT_FIRST_IV + PKMN_DS_SIZE * 1,
+        ev_addr = OPPONENT_FIRST_EV + PKMN_DS_SIZE * 1,
         name_addr = OPPONENT_FIRST_NAME + PKMN_DS_SIZE * 1,
     },
     {
@@ -81,6 +94,7 @@ OFFSETS = {
         pv_addr = OPPONENT_FIRST_PV + PKMN_DS_SIZE * 2,
         otid_addr = OPPONENT_FIRST_OTID + PKMN_DS_SIZE * 2,
         iv_addr = OPPONENT_FIRST_IV + PKMN_DS_SIZE * 2,
+        ev_addr = OPPONENT_FIRST_EV + PKMN_DS_SIZE * 2,
         name_addr = OPPONENT_FIRST_NAME + PKMN_DS_SIZE * 2,
     },
     {
@@ -88,6 +102,7 @@ OFFSETS = {
         pv_addr = OPPONENT_FIRST_PV + PKMN_DS_SIZE * 3,
         otid_addr = OPPONENT_FIRST_OTID + PKMN_DS_SIZE * 3,
         iv_addr = OPPONENT_FIRST_IV + PKMN_DS_SIZE * 3,
+        ev_addr = OPPONENT_FIRST_EV + PKMN_DS_SIZE * 3,
         name_addr = OPPONENT_FIRST_NAME + PKMN_DS_SIZE * 3,
     },
     {
@@ -95,6 +110,7 @@ OFFSETS = {
         pv_addr = OPPONENT_FIRST_PV + PKMN_DS_SIZE * 4,
         otid_addr = OPPONENT_FIRST_OTID + PKMN_DS_SIZE * 4,
         iv_addr = OPPONENT_FIRST_IV + PKMN_DS_SIZE * 4,
+        ev_addr = OPPONENT_FIRST_EV + PKMN_DS_SIZE * 4,
         name_addr = OPPONENT_FIRST_NAME + PKMN_DS_SIZE * 4,
     },
     {
@@ -102,6 +118,7 @@ OFFSETS = {
         pv_addr = OPPONENT_FIRST_PV + PKMN_DS_SIZE * 5,
         otid_addr = OPPONENT_FIRST_OTID + PKMN_DS_SIZE * 5,
         iv_addr = OPPONENT_FIRST_IV + PKMN_DS_SIZE * 5,
+        ev_addr = OPPONENT_FIRST_EV + PKMN_DS_SIZE * 5,
         name_addr = OPPONENT_FIRST_NAME + PKMN_DS_SIZE * 5,
     },
 }
@@ -184,6 +201,7 @@ function OnFrame()
     local selected_pv_addr = OFFSETS[selected].pv_addr
     local selected_otid_addr = OFFSETS[selected].otid_addr
     local selected_iv_addr = OFFSETS[selected].iv_addr
+    local selected_ev_addr = OFFSETS[selected].ev_addr
     local selected_name_addr = OFFSETS[selected].name_addr
 
     if (frame % interval == 0) then
@@ -203,13 +221,28 @@ function OnFrame()
 
         local pv = emu:read32(selected_pv_addr)
         local nature = natureMap[pv % 25]
+
         local iv_data = emu:read32(selected_iv_addr)
-        local hp = iv_data & 0x1F
-        local atk = (iv_data >> 5) & 0x1F
-        local def = (iv_data >> 10) & 0x1F
-        local speed = (iv_data >> 15) & 0x1F
-        local spatk = (iv_data >> 20) & 0x1F
-        local spdef = (iv_data >> 25) & 0x1F
+        local iv_hp = iv_data & 0x1F
+        local iv_atk = (iv_data >> 5) & 0x1F
+        local iv_def = (iv_data >> 10) & 0x1F
+        local iv_speed = (iv_data >> 15) & 0x1F
+        local iv_spatk = (iv_data >> 20) & 0x1F
+        local iv_spdef = (iv_data >> 25) & 0x1F
+
+        local ev_data1 = emu:read32(selected_ev_addr)
+        local ev_data2 = emu:read16(selected_ev_addr + 4)
+
+        local ev_hp = ev_data1 & 0xFF
+        local ev_atk = (ev_data1 >> 8) & 0xFF
+        local ev_def = (ev_data1 >> 16) & 0xFF
+        local ev_speed = (ev_data1 >> 24) & 0xFF
+
+        local ev_spatk = ev_data2 & 0xFF
+        local ev_spdef = (ev_data2 >> 8) & 0xFF
+
+        -- 0x020242BC: EVs (Speed | Def | Atk | HP)
+        -- 0x020242C0: EVs (Sp. Def | Sp. Atk)
 
         local n1 = emu:read32(selected_name_addr);
         local n2 = emu:read32(selected_name_addr + 4);
@@ -235,12 +268,20 @@ function OnFrame()
         buffer:print(string.format("%s %s\n", name, shiny_str));
         buffer:print(string.format("Personality Value (PV): 0x%08X\n", pv))
         buffer:print(string.format("Nature: %s\n\n", nature));
-        buffer:print(string.format("HP: %i\n", hp))
-        buffer:print(string.format("Attack: %i\n", atk))
-        buffer:print(string.format("Defense: %i\n", def))
-        buffer:print(string.format("Speed: %i\n", speed))
-        buffer:print(string.format("Sp. Attack: %i\n", spatk))
-        buffer:print(string.format("Sp. Defense: %i\n", spdef))
+        buffer:print(string.format("------ IVs -------\n"));
+        buffer:print(string.format("HP: %i\n", iv_hp))
+        buffer:print(string.format("Attack: %i\n", iv_atk))
+        buffer:print(string.format("Defense: %i\n", iv_def))
+        buffer:print(string.format("Speed: %i\n", iv_speed))
+        buffer:print(string.format("Sp. Attack: %i\n", iv_spatk))
+        buffer:print(string.format("Sp. Defense: %i\n", iv_spdef))
+        buffer:print(string.format("------ EVs -------\n"));
+        buffer:print(string.format("HP: %i\n", ev_hp))
+        buffer:print(string.format("Attack: %i\n", ev_atk))
+        buffer:print(string.format("Defense: %i\n", ev_def))
+        buffer:print(string.format("Speed: %i\n", ev_speed))
+        buffer:print(string.format("Sp. Attack: %i\n", ev_spatk))
+        buffer:print(string.format("Sp. Defense: %i\n", ev_spdef))
         buffer:print(string.format("\nPress L/R to view previous/next pokemon\n"))
         buffer:print(string.format("Press Select to lock pokemon selection.\n"))
         buffer:print(string.format("\nPokemon selection is currently: %s\n", selection_locked_str))
