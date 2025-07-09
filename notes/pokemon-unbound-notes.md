@@ -3,7 +3,8 @@ Important Resources:
 - [Pokemon Data Structure](<https://bulbapedia.bulbagarden.net/wiki/Pok%C3%A9mon_data_structure_(Generation_III)>)
 - [Pokemon Data Substructure](<https://bulbapedia.bulbagarden.net/wiki/Pok%C3%A9mon_data_substructures_(Generation_III)>)
 
-Trainer's Party Memory Address: 0x2024284
+Trainer's Party Memory Address: 0x02024284
+Opponent Pokemon Memory Address: 0x02024020
 
 Some important distinctions to note about Pokemon Unbound vs. Official Pokemon
 
@@ -47,54 +48,4 @@ Some important distinctions to note about Pokemon Unbound vs. Official Pokemon
 0x020242DC: (Lo: HP Stat | Hi: Attack Stat)
 0x020242E0: (Lo: Def Stat | Hi: Speed Stat)
 0x020242E4: (Lo: Sp. Atk Stat | Hi: Sp. Def Stat)
-```
-
-Opponent Pokemon Memory Address: 0x02024020
-
-Randomly Encountered Furfrou:
-
-```python
-# IVs: 16/18/26/16/2/30
-
->>> bin(16), bin(18), bin(26), bin(30), bin(16), bin(2)
-('0b10000', '0b10010', '0b11010', '0b11110', '0b10000', '0b10')
->>> hex(16), hex(18), hex(26), hex(30), hex(16), hex(2)
-('0x10', '0x12', '0x1a', '0x1e', '0x10', '0x2')
-
-
->>> bin(key ^ 0x050f6a50)
-'0b11110011111101101010101101000010'
-
->>> bin(key ^ 0x0234B600)
-'0b11110100110011010111011100010010'
-```
-
-```
-A98EB81F: PV
-5F77790D: OTID
-DAE6E9C0: Name (Char 0-3)
-FFE9E3E6: Name (Char 4-7)
-0202F604: (Lo: ? | Hi-Lo: Region | Hi-Hi: ?)
-FFFFFFBB:
-00FFFFFF:
-00000000:
-00000310: Pokemon Sprite ID
-00022540: XP of Pokemon when caught
-00033200: No clue what this is, but it changes when battle ends
-002401CA: (Lo: Move 1 ID | Hi: Move 2 ID)
-01B700CC: (Lo: Move 3 ID | Hi: Move 4 ID)
-0A141405: Remaining PP
-00000000:
-00000000:
-00000000:
-0234B600: (Lo-Lo: ? | Lo-Hi: ? | Hi-Lo: Met Level | Hi-Hi: ?) Gigantamax flag is somewhere here
-050F6A50: (IVs, IsEgg, Ability) (IV Order: Sp. Def | Sp. Atk | Speed | Def | Atk | HP)
-00000000:
-00000000:
-0094FF34: (Lo: ? | Hi: Remaining HP)
-006A0094:
-007E0048:
-00630050:
-
-
 ```
