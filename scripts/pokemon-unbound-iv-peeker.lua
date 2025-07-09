@@ -1,5 +1,7 @@
 -- to be used with mgba
 
+local tables = require("pokemon-unbound-tables")
+
 local buffer = console:createBuffer("iv-peeker")
 
 KEY_L = 1 << 9
@@ -9,175 +11,120 @@ KEY_SELECT = 1 << 2
 
 PKMN_DS_SIZE = 100
 
-PARTY_FIRST_PV = 0x02024284
-PARTY_FIRST_OTID = 0x02024288
-PARTY_FIRST_IV = 0x020242CC
-PARTY_FIRST_EV = 0x020242BC
-PARTY_FIRST_NAME = 0x0202428C
+PARTY_ADDR = 0x02024284
 
-OPPONENT_FIRST_PV = 0x0202402C
-OPPONENT_FIRST_OTID = 0x02024030
-OPPONENT_FIRST_IV = 0x02024074
-OPPONENT_FIRST_EV = 0x02024064
-OPPONENT_FIRST_NAME = 0x02024034
+OPPONENT_PARTY_ADDR = 0x0202402C
 
--- 0x020242BC: EVs (Speed | Def | Atk | HP)
--- 0x020242C0: EVs (Sp. Def | Sp. Atk)
+OFFSET_PV = 0
+OFFSET_OTID = 4
+OFFSET_NAME = 8
+OFFSET_IV = 72
+EV_OFFSET = 56
 
 OFFSETS = {
     {
         description = "PARTY #1",
-        pv_addr = PARTY_FIRST_PV + PKMN_DS_SIZE * 0,
-        otid_addr = PARTY_FIRST_OTID + PKMN_DS_SIZE * 0,
-        iv_addr = PARTY_FIRST_IV + PKMN_DS_SIZE * 0,
-        ev_addr = PARTY_FIRST_EV + PKMN_DS_SIZE * 0,
-        name_addr = PARTY_FIRST_NAME + PKMN_DS_SIZE * 0,
+        pv_addr = PARTY_ADDR + OFFSET_PV + PKMN_DS_SIZE * 0,
+        otid_addr = PARTY_ADDR + OFFSET_OTID + PKMN_DS_SIZE * 0,
+        iv_addr = PARTY_ADDR + OFFSET_IV + PKMN_DS_SIZE * 0,
+        ev_addr = PARTY_ADDR + EV_OFFSET + PKMN_DS_SIZE * 0,
+        name_addr = PARTY_ADDR + OFFSET_NAME + PKMN_DS_SIZE * 0,
     },
     {
         description = "PARTY #2",
-        pv_addr = PARTY_FIRST_PV + PKMN_DS_SIZE * 1,
-        otid_addr = PARTY_FIRST_OTID + PKMN_DS_SIZE * 1,
-        iv_addr = PARTY_FIRST_IV + PKMN_DS_SIZE * 1,
-        ev_addr = PARTY_FIRST_EV + PKMN_DS_SIZE * 1,
-        name_addr = PARTY_FIRST_NAME + PKMN_DS_SIZE * 1,
+        pv_addr = PARTY_ADDR + OFFSET_PV + PKMN_DS_SIZE * 1,
+        otid_addr = PARTY_ADDR + OFFSET_OTID + PKMN_DS_SIZE * 1,
+        iv_addr = PARTY_ADDR + OFFSET_IV + PKMN_DS_SIZE * 1,
+        ev_addr = PARTY_ADDR + EV_OFFSET + PKMN_DS_SIZE * 1,
+        name_addr = PARTY_ADDR + OFFSET_NAME + PKMN_DS_SIZE * 1,
     },
     {
         description = "PARTY #3",
-        pv_addr = PARTY_FIRST_PV + PKMN_DS_SIZE * 2,
-        otid_addr = PARTY_FIRST_OTID + PKMN_DS_SIZE * 2,
-        iv_addr = PARTY_FIRST_IV + PKMN_DS_SIZE * 2,
-        ev_addr = PARTY_FIRST_EV + PKMN_DS_SIZE * 2,
-        name_addr = PARTY_FIRST_NAME + PKMN_DS_SIZE * 2,
+        pv_addr = PARTY_ADDR + OFFSET_PV + PKMN_DS_SIZE * 2,
+        otid_addr = PARTY_ADDR + OFFSET_OTID + PKMN_DS_SIZE * 2,
+        iv_addr = PARTY_ADDR + OFFSET_IV + PKMN_DS_SIZE * 2,
+        ev_addr = PARTY_ADDR + EV_OFFSET + PKMN_DS_SIZE * 2,
+        name_addr = PARTY_ADDR + OFFSET_NAME + PKMN_DS_SIZE * 2,
     },
     {
         description = "PARTY #4",
-        pv_addr = PARTY_FIRST_PV + PKMN_DS_SIZE * 3,
-        otid_addr = PARTY_FIRST_OTID + PKMN_DS_SIZE * 3,
-        iv_addr = PARTY_FIRST_IV + PKMN_DS_SIZE * 3,
-        ev_addr = PARTY_FIRST_EV + PKMN_DS_SIZE * 3,
-        name_addr = PARTY_FIRST_NAME + PKMN_DS_SIZE * 3,
+        pv_addr = PARTY_ADDR + OFFSET_PV + PKMN_DS_SIZE * 3,
+        otid_addr = PARTY_ADDR + OFFSET_OTID + PKMN_DS_SIZE * 3,
+        iv_addr = PARTY_ADDR + OFFSET_IV + PKMN_DS_SIZE * 3,
+        ev_addr = PARTY_ADDR + EV_OFFSET + PKMN_DS_SIZE * 3,
+        name_addr = PARTY_ADDR + OFFSET_NAME + PKMN_DS_SIZE * 3,
     },
     {
         description = "PARTY #5",
-        pv_addr = PARTY_FIRST_PV + PKMN_DS_SIZE * 4,
-        otid_addr = PARTY_FIRST_OTID + PKMN_DS_SIZE * 4,
-        iv_addr = PARTY_FIRST_IV + PKMN_DS_SIZE * 4,
-        ev_addr = PARTY_FIRST_EV + PKMN_DS_SIZE * 4,
-        name_addr = PARTY_FIRST_NAME + PKMN_DS_SIZE * 4,
+        pv_addr = PARTY_ADDR + OFFSET_PV + PKMN_DS_SIZE * 4,
+        otid_addr = PARTY_ADDR + OFFSET_OTID + PKMN_DS_SIZE * 4,
+        iv_addr = PARTY_ADDR + OFFSET_IV + PKMN_DS_SIZE * 4,
+        ev_addr = PARTY_ADDR + EV_OFFSET + PKMN_DS_SIZE * 4,
+        name_addr = PARTY_ADDR + OFFSET_NAME + PKMN_DS_SIZE * 4,
     },
     {
         description = "PARTY #6",
-        pv_addr = PARTY_FIRST_PV + PKMN_DS_SIZE * 5,
-        otid_addr = PARTY_FIRST_OTID + PKMN_DS_SIZE * 5,
-        iv_addr = PARTY_FIRST_IV + PKMN_DS_SIZE * 5,
-        ev_addr = PARTY_FIRST_EV + PKMN_DS_SIZE * 5,
-        name_addr = PARTY_FIRST_NAME + PKMN_DS_SIZE * 5,
+        pv_addr = PARTY_ADDR + OFFSET_PV + PKMN_DS_SIZE * 5,
+        otid_addr = PARTY_ADDR + OFFSET_OTID + PKMN_DS_SIZE * 5,
+        iv_addr = PARTY_ADDR + OFFSET_IV + PKMN_DS_SIZE * 5,
+        ev_addr = PARTY_ADDR + EV_OFFSET + PKMN_DS_SIZE * 5,
+        name_addr = PARTY_ADDR + OFFSET_NAME + PKMN_DS_SIZE * 5,
     },
     {
         description = "OPPONENT #1",
-        pv_addr = OPPONENT_FIRST_PV + PKMN_DS_SIZE * 0,
-        otid_addr = OPPONENT_FIRST_OTID + PKMN_DS_SIZE * 0,
-        iv_addr = OPPONENT_FIRST_IV + PKMN_DS_SIZE * 0,
-        ev_addr = OPPONENT_FIRST_EV + PKMN_DS_SIZE * 0,
-        name_addr = OPPONENT_FIRST_NAME + PKMN_DS_SIZE * 0,
+        pv_addr = OPPONENT_PARTY_ADDR + OFFSET_PV + PKMN_DS_SIZE * 0,
+        otid_addr = OPPONENT_PARTY_ADDR + OFFSET_OTID + PKMN_DS_SIZE * 0,
+        iv_addr = OPPONENT_PARTY_ADDR + OFFSET_IV + PKMN_DS_SIZE * 0,
+        ev_addr = OPPONENT_PARTY_ADDR + EV_OFFSET + PKMN_DS_SIZE * 0,
+        name_addr = OPPONENT_PARTY_ADDR + OFFSET_NAME + PKMN_DS_SIZE * 0,
     },
     {
         description = "OPPONENT #2",
-        pv_addr = OPPONENT_FIRST_PV + PKMN_DS_SIZE * 1,
-        otid_addr = OPPONENT_FIRST_OTID + PKMN_DS_SIZE * 1,
-        iv_addr = OPPONENT_FIRST_IV + PKMN_DS_SIZE * 1,
-        ev_addr = OPPONENT_FIRST_EV + PKMN_DS_SIZE * 1,
-        name_addr = OPPONENT_FIRST_NAME + PKMN_DS_SIZE * 1,
+        pv_addr = OPPONENT_PARTY_ADDR + OFFSET_PV + PKMN_DS_SIZE * 1,
+        otid_addr = OPPONENT_PARTY_ADDR + OFFSET_OTID + PKMN_DS_SIZE * 1,
+        iv_addr = OPPONENT_PARTY_ADDR + OFFSET_IV + PKMN_DS_SIZE * 1,
+        ev_addr = OPPONENT_PARTY_ADDR + EV_OFFSET + PKMN_DS_SIZE * 1,
+        name_addr = OPPONENT_PARTY_ADDR + OFFSET_NAME + PKMN_DS_SIZE * 1,
     },
     {
         description = "OPPONENT #3",
-        pv_addr = OPPONENT_FIRST_PV + PKMN_DS_SIZE * 2,
-        otid_addr = OPPONENT_FIRST_OTID + PKMN_DS_SIZE * 2,
-        iv_addr = OPPONENT_FIRST_IV + PKMN_DS_SIZE * 2,
-        ev_addr = OPPONENT_FIRST_EV + PKMN_DS_SIZE * 2,
-        name_addr = OPPONENT_FIRST_NAME + PKMN_DS_SIZE * 2,
+        pv_addr = OPPONENT_PARTY_ADDR + OFFSET_PV + PKMN_DS_SIZE * 2,
+        otid_addr = OPPONENT_PARTY_ADDR + OFFSET_OTID + PKMN_DS_SIZE * 2,
+        iv_addr = OPPONENT_PARTY_ADDR + OFFSET_IV + PKMN_DS_SIZE * 2,
+        ev_addr = OPPONENT_PARTY_ADDR + EV_OFFSET + PKMN_DS_SIZE * 2,
+        name_addr = OPPONENT_PARTY_ADDR + OFFSET_NAME + PKMN_DS_SIZE * 2,
     },
     {
         description = "OPPONENT #4",
-        pv_addr = OPPONENT_FIRST_PV + PKMN_DS_SIZE * 3,
-        otid_addr = OPPONENT_FIRST_OTID + PKMN_DS_SIZE * 3,
-        iv_addr = OPPONENT_FIRST_IV + PKMN_DS_SIZE * 3,
-        ev_addr = OPPONENT_FIRST_EV + PKMN_DS_SIZE * 3,
-        name_addr = OPPONENT_FIRST_NAME + PKMN_DS_SIZE * 3,
+        pv_addr = OPPONENT_PARTY_ADDR + OFFSET_PV + PKMN_DS_SIZE * 3,
+        otid_addr = OPPONENT_PARTY_ADDR + OFFSET_OTID + PKMN_DS_SIZE * 3,
+        iv_addr = OPPONENT_PARTY_ADDR + OFFSET_IV + PKMN_DS_SIZE * 3,
+        ev_addr = OPPONENT_PARTY_ADDR + EV_OFFSET + PKMN_DS_SIZE * 3,
+        name_addr = OPPONENT_PARTY_ADDR + OFFSET_NAME + PKMN_DS_SIZE * 3,
     },
     {
         description = "OPPONENT #5",
-        pv_addr = OPPONENT_FIRST_PV + PKMN_DS_SIZE * 4,
-        otid_addr = OPPONENT_FIRST_OTID + PKMN_DS_SIZE * 4,
-        iv_addr = OPPONENT_FIRST_IV + PKMN_DS_SIZE * 4,
-        ev_addr = OPPONENT_FIRST_EV + PKMN_DS_SIZE * 4,
-        name_addr = OPPONENT_FIRST_NAME + PKMN_DS_SIZE * 4,
+        pv_addr = OPPONENT_PARTY_ADDR + OFFSET_PV + PKMN_DS_SIZE * 4,
+        otid_addr = OPPONENT_PARTY_ADDR + OFFSET_OTID + PKMN_DS_SIZE * 4,
+        iv_addr = OPPONENT_PARTY_ADDR + OFFSET_IV + PKMN_DS_SIZE * 4,
+        ev_addr = OPPONENT_PARTY_ADDR + EV_OFFSET + PKMN_DS_SIZE * 4,
+        name_addr = OPPONENT_PARTY_ADDR + OFFSET_NAME + PKMN_DS_SIZE * 4,
     },
     {
         description = "OPPONENT #6",
-        pv_addr = OPPONENT_FIRST_PV + PKMN_DS_SIZE * 5,
-        otid_addr = OPPONENT_FIRST_OTID + PKMN_DS_SIZE * 5,
-        iv_addr = OPPONENT_FIRST_IV + PKMN_DS_SIZE * 5,
-        ev_addr = OPPONENT_FIRST_EV + PKMN_DS_SIZE * 5,
-        name_addr = OPPONENT_FIRST_NAME + PKMN_DS_SIZE * 5,
+        pv_addr = OPPONENT_PARTY_ADDR + OFFSET_PV + PKMN_DS_SIZE * 5,
+        otid_addr = OPPONENT_PARTY_ADDR + OFFSET_OTID + PKMN_DS_SIZE * 5,
+        iv_addr = OPPONENT_PARTY_ADDR + OFFSET_IV + PKMN_DS_SIZE * 5,
+        ev_addr = OPPONENT_PARTY_ADDR + EV_OFFSET + PKMN_DS_SIZE * 5,
+        name_addr = OPPONENT_PARTY_ADDR + OFFSET_NAME + PKMN_DS_SIZE * 5,
     },
-}
-
-local natureMap = {
-  [0] = "Hardy",
-  [1] = "Lonely",
-  [2] = "Brave",
-  [3] = "Adamant",
-  [4] = "Naughty",
-  [5] = "Bold",
-  [6] = "Docile",
-  [7] = "Relaxed",
-  [8] = "Impish",
-  [9] = "Lax",
-  [10] = "Timid",
-  [11] = "Hasty",
-  [12] = "Serious",
-  [13] = "Jolly",
-  [14] = "Naive",
-  [15] = "Modest",
-  [16] = "Mild",
-  [17] = "Quiet",
-  [18] = "Bashful",
-  [19] = "Rash",
-  [20] = "Calm",
-  [21] = "Gentle",
-  [22] = "Sassy",
-  [23] = "Careful",
-  [24] = "Quirky",
-}
-
-local charMap = {
-    [0xA0] = "ʳᵉ", [0xA1] = "0", [0xA2] = "1", [0xA3] = "2", [0xA4] = "3",
-    [0xA5] = "4", [0xA6] = "5", [0xA7] = "6", [0xA8] = "7", [0xA9] = "8",
-    [0xAA] = "9", [0xAB] = "!", [0xAC] = "?", [0xAD] = ".", [0xAE] = "-",
-    [0xAF] = "･", [0xB0] = "‥", [0xB1] = "“", [0xB2] = "”", [0xB3] = "‘",
-    [0xB4] = "'", [0xB5] = "♂", [0xB6] = "♀", [0xB7] = "$", [0xB8] = ",",
-    [0xB9] = "×", [0xBA] = "/", [0xBB] = "A", [0xBC] = "B", [0xBD] = "C",
-    [0xBE] = "D", [0xBF] = "E", [0xC0] = "F", [0xC1] = "G", [0xC2] = "H",
-    [0xC3] = "I", [0xC4] = "J", [0xC5] = "K", [0xC6] = "L", [0xC7] = "M",
-    [0xC8] = "N", [0xC9] = "O", [0xCA] = "P", [0xCB] = "Q", [0xCC] = "R",
-    [0xCD] = "S", [0xCE] = "T", [0xCF] = "U", [0xD0] = "V", [0xD1]  = "W",
-    [0xD2] = "X", [0xD3] = "Y", [0xD4] = "Z", [0xD5] = "a", [0xD6] = "b",
-    [0xD7] = "c", [0xD8] = "d", [0xD9] = "e", [0xDA] = "f", [0xDB] = "g",
-    [0xDC] = "h", [0xDD] = "i", [0xDE] = "j", [0xDF] = "k", [0xE0] = "l",
-    [0xE1] = "m", [0xE2] = "n", [0xE3] = "o", [0xE4] = "p", [0xE5] = "q",
-    [0xE6] = "r",  [0xE7] = "s", [0xE8] = "t", [0xE9] = "u", [0xEA] = "v",
-    [0xEB] = "w", [0xEC] = "x", [0xED] = "y", [0xEE] = "z", [0xEF] = "►",
-    [0xF0] = ":", [0xF1] = "Ä", [0xF2] = "Ö", [0xF3] = "Ü", [0xF4] = "ä",
-    [0xF5] = "ö", [0xF6] = "ü", [0xF8] = nil, [0xF9] = nil, [0xFA] = nil,
-    [0xFB] = nil, [0xFC] = nil, [0xFD] = nil, [0xFF] = nil,
 }
 
 -- converts pokemon's proprietary char set to standard ASCII
 function ConvertNameToAscii(byteArr)
     local result = {}
     for _, byte in ipairs(byteArr) do
-        local ch = charMap[byte]
+        local ch = tables.chars[byte]
         if (ch == nil) then
             break;
         end
@@ -233,7 +180,7 @@ function OnFrame()
         local selection_locked_str  = (selection_locked and "LOCKED" or "UNLOCKED")
 
         local pv = emu:read32(selected_pv_addr)
-        local nature = natureMap[pv % 25]
+        local nature = tables.natures[pv % 25]
 
         local iv_data = emu:read32(selected_iv_addr)
         local iv_hp = iv_data & 0x1F
@@ -250,12 +197,8 @@ function OnFrame()
         local ev_atk = (ev_data1 >> 8) & 0xFF
         local ev_def = (ev_data1 >> 16) & 0xFF
         local ev_speed = (ev_data1 >> 24) & 0xFF
-
         local ev_spatk = ev_data2 & 0xFF
         local ev_spdef = (ev_data2 >> 8) & 0xFF
-
-        -- 0x020242BC: EVs (Speed | Def | Atk | HP)
-        -- 0x020242C0: EVs (Sp. Def | Sp. Atk)
 
         local n1 = emu:read32(selected_name_addr);
         local n2 = emu:read32(selected_name_addr + 4);
@@ -279,7 +222,7 @@ function OnFrame()
         buffer:print("----------------------------------------\n")
         buffer:print(string.format("%s: %s %s\n", OFFSETS[selected].description, name, shiny_str));
         buffer:print(string.format("Personality Value (PV): 0x%08X\n", pv))
-        buffer:print(string.format("Nature: %s\n\n", nature));
+        buffer:print(string.format("Nature: %s\n", nature));
         buffer:print(string.format("------ IVs -------\n"));
         buffer:print(string.format("HP: %i\n", iv_hp))
         buffer:print(string.format("Attack: %i\n", iv_atk))
@@ -294,9 +237,9 @@ function OnFrame()
         buffer:print(string.format("Speed: %i\n", ev_speed))
         buffer:print(string.format("Sp. Attack: %i\n", ev_spatk))
         buffer:print(string.format("Sp. Defense: %i\n", ev_spdef))
-        buffer:print(string.format("\nPress L/R to view previous/next pokemon\n"))
-        buffer:print(string.format("Press Select to lock pokemon selection.\n"))
-        buffer:print(string.format("\nPokemon selection is currently: %s\n", selection_locked_str))
+        buffer:print(string.format("---- Keybinds -----\n"));
+        buffer:print(string.format("L/R = view prev/next pokemon\nSelect = Toggle pokemon selection lock\n"))
+        buffer:print(string.format("Selection is currently: %s\n", selection_locked_str))
         -- buffer:print(string.format("\nKeys 0x%08X\n", keys))
     end
 end
