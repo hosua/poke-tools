@@ -240,20 +240,24 @@ function OnFrame()
         buffer:print(string.format("Personality Value (PV): 0x%08X\n", pv))
         buffer:print(string.format("Nature: %s\n", nature));
         buffer:print(string.format("Item: %s\n", item));
-        buffer:print(string.format("------ IVs -------\n"));
-        buffer:print(string.format("HP: %i\n", iv_hp))
-        buffer:print(string.format("Attack: %i\n", iv_atk))
-        buffer:print(string.format("Defense: %i\n", iv_def))
-        buffer:print(string.format("Speed: %i\n", iv_speed))
-        buffer:print(string.format("Sp. Attack: %i\n", iv_spatk))
-        buffer:print(string.format("Sp. Defense: %i\n", iv_spdef))
-        buffer:print(string.format("------ EVs -------\n"));
-        buffer:print(string.format("HP: %i\n", ev_hp))
-        buffer:print(string.format("Attack: %i\n", ev_atk))
-        buffer:print(string.format("Defense: %i\n", ev_def))
-        buffer:print(string.format("Speed: %i\n", ev_speed))
-        buffer:print(string.format("Sp. Attack: %i\n", ev_spatk))
-        buffer:print(string.format("Sp. Defense: %i\n", ev_spdef))
+        buffer:print(string.format("Stat: HP | ATK | DEF | SP.A | SP.D | SPEED\n"))
+        buffer:print(string.format("IVs: %3i |%4i |%4i |%5i |%5i |%5i\n", iv_hp, iv_atk, iv_def, iv_spatk, iv_spdef, iv_speed))
+        buffer:print(string.format("EVs: %3i |%4i |%4i |%5i |%5i |%5i\n", ev_hp, ev_atk, ev_def, ev_spatk, ev_spdef, ev_speed))
+
+        -- buffer:print(string.format("------ IVs -------\n"));
+        -- buffer:print(string.format("HP: %i\n", iv_hp))
+        -- buffer:print(string.format("Attack: %i\n", iv_atk))
+        -- buffer:print(string.format("Defense: %i\n", iv_def))
+        -- buffer:print(string.format("Speed: %i\n", iv_speed))
+        -- buffer:print(string.format("Sp. Attack: %i\n", iv_spatk))
+        -- buffer:print(string.format("Sp. Defense: %i\n", iv_spdef))
+        -- buffer:print(string.format("------ EVs -------\n"));
+        -- buffer:print(string.format("HP: %i\n", ev_hp))
+        -- buffer:print(string.format("Attack: %i\n", ev_atk))
+        -- buffer:print(string.format("Defense: %i\n", ev_def))
+        -- buffer:print(string.format("Speed: %i\n", ev_speed))
+        -- buffer:print(string.format("Sp. Attack: %i\n", ev_spatk))
+        -- buffer:print(string.format("Sp. Defense: %i\n", ev_spdef))
         buffer:print(string.format("---- Keybinds -----\n"));
         buffer:print(string.format("L/R = view prev/next pokemon\nSelect = Toggle pokemon selection lock\n"))
         buffer:print(string.format("Selection is currently: %s\n", selection_locked_str))
